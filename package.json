@@ -1,0 +1,43 @@
+{
+  "name": "flauncher",
+  "version": "1.0.0",
+  "description": "Fugance Launcher",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-builder --win portable",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "author": "Fugance",
+  "license": "MIT",
+  "build": {
+    "appId": "com.fugance.flauncher",
+    "productName": "FLauncher",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icons/app.ico",
+      "script": "install-script.nsi"
+    },
+    "extraFiles": [
+      {
+        "from": "LICENSE.txt",
+        "to": "LICENSE.txt"
+      }
+    ],
+    "asar": true
+  },
+  "dependencies": {
+    "electron-builder": "latest",
+    "minecraft-launcher-core": "^3.17.1"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "^24.4.0",
+    "electron-packager": "^17.1.1",
+    "minecraft-launcher-core": "^3.17.1",
+    "nsis": "^0.0.0"
+  }
+}
