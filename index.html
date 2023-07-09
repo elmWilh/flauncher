@@ -4,9 +4,17 @@
     <title>Minecraft Launcher</title>
     <style>
         /* Стили */
+        @font-face {
+            font-family: 'Minecrafter';
+            src: url('fonts/4482-font.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'Minecrafte';
+            src: url('fonts/minecraft.ttf') format('truetype');
+        }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Minecrafte', Arial, sans-serif;
             background: url('icons/background.png') no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -94,6 +102,7 @@
             border: none;
             border-radius: 5px;
             transition: all 0.3s ease; 
+            font-family: 'Minecrafte', Arial, sans-serif;
         }
 
         .slider input {
@@ -109,6 +118,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease; 
+            font-family: 'Minecrafte', Arial, sans-serif;
         }
 
         .button:hover {
@@ -133,6 +143,7 @@
             cursor: pointer;
             text-decoration: underline;
             transition: all 0.3s ease; 
+            font-family: 'Minecrafte', Arial, sans-serif;
         }
 
         .progress-bar {
@@ -159,39 +170,40 @@
             transform: translate(-50%, -50%);
             font-weight: bold;
             transition: all 0.3s ease;
+            font-family: 'Minecrafte', Arial, sans-serif;
         }
 
         input:focus {
             outline: none;
         }
-        
     </style>
     <script src="https://cdn.jsdelivr.net/npm/nanobar"></script>
 </head>
 <body>
     <div class="title-bar">
         <div class="title-bar-img"><img src="icons/Fish.png" alt="fish"></div>
-        <div class="title-bar-text">Fugance Launcher</div>
+        <div class="title-bar-text" >Fugance Launcher</div>
         <div class="title-bar-controls">
             <button class="close-button" onclick="window.close()"><img src="icons/close.png" alt="close"></button>
         </div>
     </div>
+    <div class="version-text" style="position: absolute; top: 95%; left: 2%; color: #b8ffb8;">Minecraft 1.20 Vanila</div>
     <div class="container">
-        <h1 class="title">Fugance Launcher</h1>
+        <h1 class="title" style="font-family: 'Minecrafter', Arial, sans-serif; font-size: 25px;">Fugance Launcher</h1>
         <div class="input-field">
-            <label for="usernameInput">Никнейм</label>
+            <label for="usernameInput" style="font-family: 'Minecrafte', Arial, sans-serif;">Никнейм</label>
             <input id="usernameInput" type="text" placeholder="Введите ваш никнейм">
         </div>
 
         <div class="slider">
-            <label for="ramSlider">ОЗУ: <span id="ramAmount">4 GB</span></label>
+            <label for="ramSlider" style="font-family: 'Minecrafte', Arial, sans-serif;">ОЗУ: <span id="ramAmount">4 GB</span></label>
             <input id="ramSlider" type="range" min="4" max="16" value="4">
         </div>
              
         <button id="launchMinecraftButton" class="button">Запустить</button>
         <div class="progress-bar">
             <div id="gameLoadProgress"></div>
-            <span id="gameLoadProgressValue">0%</span>
+            <span id="gameLoadProgressValue" style="font-family: 'Minecrafte', Arial, sans-serif;">0%</span>
         </div>
     </div>
     <script src="main.js"></script>
