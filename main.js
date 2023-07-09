@@ -58,7 +58,7 @@ function createLauncher() {
     console.log(message);
     consoleWindow.webContents.send('consoleLog', `[DATA] ${message}`);
   
-    // Identify and update game launch progress based on the console logs
+    // Не работает. В процессе разработки.
     if (message.includes('MCLC version 3.17.1')) {
       win.webContents.send('updateGameLaunchProgress', 10);
     } else if (message.includes('Downloaded assets')) {
