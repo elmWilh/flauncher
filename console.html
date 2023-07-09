@@ -101,7 +101,6 @@
 
         ipcRenderer.on('consoleLog', (event, log) => {
             consoleLogElement.textContent += log + '\n';
-            // Прокрутка вниз при добавлении новых логов
             consoleLogElement.scrollTop = consoleLogElement.scrollHeight;
         });
 
