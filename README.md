@@ -1,7 +1,6 @@
 # Fugance Лаунчер <img src="icons/readme.png" align="right" />
 
 <a href="https://discord.com/invite/y2QqHMsrwC"><img src="https://img.shields.io/discord/308323056592486420?logo=discord" alt="chat on Discord"></a>
-[<img alt="NPM" src="https://img.shields.io/npm/l/minecraft-launcher-core">](https://img.shields.io/github/license/elmWilh/flauncher)
 ![GitHub repo size](https://img.shields.io/github/repo-size/elmWilh/flauncher)
 ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/elmWilh/flauncher)
 
