@@ -55,7 +55,7 @@ function createLauncher() {
   });
 
   launcher.on('data', (message) => {
-    console.log(message);
+    //console.log(message);
     consoleWindow.webContents.send('consoleLog', `[DATA] ${message}`);
   
     // Не работает. В процессе разработки.
