@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { Client, Authenticator } = require('minecraft-launcher-core');
 const os = require('os');
 const path = require('path');
+const fs = require("fs");
 
 let launcher;
 let win;
@@ -13,7 +14,7 @@ function createWindow() {
     height: 600,
     resizable: false,
     frame: false,
-    show: true,
+    show: false,
     icon: path.join(__dirname, 'icons/server-icon.png'),
     webPreferences: {
       nodeIntegration: true,
@@ -24,6 +25,9 @@ function createWindow() {
   });
 
   win.loadFile('index.html');
+  win.once('ready-to-show', () => {
+    win.show();
+  });
   win.on('closed', () => {
     win = null;
     if (consoleWindow) {
@@ -38,13 +42,16 @@ function createLauncher() {
     authorization: Authenticator.getAuth('player'),
     root: path.join(os.homedir(), 'AppData', 'Roaming', '.minecraft'),
     version: {
-      number: '1.20',
+      number: "1.20",
       type: 'release',
     },
     memory: {
       max: '16G',
       min: '4G',
     },
+    overrides: {
+      maxSockets: 1
+    }
   };
 
   launcher = new Client();
@@ -54,24 +61,21 @@ function createLauncher() {
     consoleWindow.webContents.send('consoleLog', `[DEBUG] ${message}`);
   });
 
-  launcher.on('data', (message) => {
-    //console.log(message);
-    consoleWindow.webContents.send('consoleLog', `[DATA] ${message}`);
-  
-    // Не работает. В процессе разработки.
-    if (message.includes('MCLC version 3.17.1')) {
-      win.webContents.send('updateGameLaunchProgress', 10);
-    } else if (message.includes('Downloaded assets')) {
-      win.webContents.send('updateGameLaunchProgress', 50);
-    } else if (message.includes('Launching with arguments')) {
-      win.webContents.send('updateGameLaunchProgress', 100);
-    }
+  launcher.on('download-status', (message) => {
+    win.webContents.send('updateDownloadStatus', message);
   });
 
-  ipcMain.on('launchMinecraft', (event, username, ramAllocation) => {
+  launcher.on('data', (message) => {
+    consoleWindow.webContents.send('consoleLog', `[DATA] ${message}`);
+  });
+
+  ipcMain.on('launchMinecraft', (event, username, ramAllocation, java, version) => {
+    launcherOptions.javaPath = java;
+    launcherOptions.version.number = version;
     launcherOptions.authorization = Authenticator.getAuth(username);
     launcherOptions.memory.max = `${ramAllocation}G`;
     console.log(`Launching Minecraft as ${username} with ${ramAllocation}GB of RAM`);
+    //win.webContents.send('gameLaunched', true);
 
     launcher.launch(launcherOptions);
   });
