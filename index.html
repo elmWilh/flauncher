@@ -5,187 +5,18 @@
     <title>Minecraft Launcher</title>
     <script src="renderer.js"></script>
     <script src="web.js"></script>
-    <style>
-        /* Стили */
-        @font-face {
-            font-family: 'Minecrafter';
-            src: url('fonts/4482-font.ttf') format('truetype');
-        }
-
-        @font-face {
-            font-family: 'Minecrafte';
-            src: url('fonts/minecraft.ttf') format('truetype');
-        }
-
-        body {
-            font-family: 'Minecrafte', Arial, sans-serif;
-            background: url('icons/background.png') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .title-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #000;
-            color: #fff;
-            padding: 10px 20px;
-            -webkit-app-region: drag;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            transition: all 0.3s ease;
-        }
-
-        .title-bar-controls {
-            -webkit-app-region: no-drag;
-        }
-
-        .close-button {
-            background: none;
-            border: none;
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-button:hover {
-            background: #424242;
-            border: none;
-            width: 25px;
-            height: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-button img {
-            margin: -1px;
-        }
-
-        .container {
-            width: 500px;
-            padding: 20px;
-            background: rgba(51, 51, 51, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .title {
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .input-field,
-        .slider,
-        select {
-            width: 80%;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .input-field input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            font-family: 'Minecrafte', Arial, sans-serif;
-        }
-
-        .slider input {
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .button {
-            padding: 10px 20px;
-            background: #4CAF50;
-            border: none;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Minecrafte', Arial, sans-serif;
-        }
-
-        .button:hover {
-            padding: 10px 20px;
-            background: #2c702e;
-            border: none;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .title-bar-img img {
-            width: 25px;
-            height: 25px;
-            position: absolute;
-            top: 10px;
-        }
-
-        .toggle-login {
-            margin-top: 20px;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: underline;
-            transition: all 0.3s ease;
-            font-family: 'Minecrafte', Arial, sans-serif;
-        }
-
-        .progress-bar {
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 5px;
-            margin: 10px 0;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .progress-bar div {
-            height: 20px;
-            background-color: #3390FF;
-            width: 0;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .progress-bar span {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: bold;
-            transition: all 0.3s ease;
-            font-family: 'Minecrafte', Arial, sans-serif;
-        }
-
-        input:focus {
-            outline: none;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">    
     <script src="https://cdn.jsdelivr.net/npm/nanobar"></script>
 </head>
+
+<div id="welcomeModal" class="modal">
+    <div class="modal-content">
+        <h2>Добро пожаловать в Fugance Launcher!</h2>
+        <img src="icons/Fish.png" alt="Welcome" style="width:100%;margin-bottom:20px;">
+        <button id="playWithAccount" class="button">Играть с аккаунтом Microsoft</button>
+        <button id="playWithoutAccount" class="button">Играть с обычными настройками</button>
+    </div>
+</div>
 
 <body>
     <div class="title-bar">
@@ -195,7 +26,7 @@
             <button class="close-button" onclick="window.close()"><img src="icons/close.png" alt="close"></button>
         </div>
     </div>
-    <div class="version-text" style="position: absolute; top: 95%; left: 2%; color: #b8ffb8; display: none;">Minecraft 1.20 Vanila
+    <div class="version-text" style="position: absolute; top: 95%; left: 2%; color: #b8ffb8; display: none;">© (2023 - 2024) Fugances.xyz.
     </div>
     <div class="container">
         <h1 class="title" style="font-family: 'Minecrafter', Arial, sans-serif; font-size: 25px;">Fugance Launcher</h1>

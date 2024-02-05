@@ -1,6 +1,26 @@
 const VERSIONS_MANIFEST = "https://piston-meta.mojang.com/mc/game/version_manifest.json";
-
 document.addEventListener("DOMContentLoaded", function (event) {
+
+    var welcomeModal = document.getElementById('welcomeModal');
+    var playWithAccountBtn = document.getElementById('playWithAccount');
+    var playWithoutAccountBtn = document.getElementById('playWithoutAccount');
+
+    welcomeModal.style.display = "block";
+
+    playWithAccountBtn.onclick = async function() {
+        welcomeModal.style.display = "none";
+        const { Auth } = require("msmc");
+            const authManager = new Auth("select_account");
+            authManager.launch("raw").then(async (xboxManager) => {
+                const token = await xboxManager.getMinecraft();
+            });
+    }
+    
+    playWithoutAccountBtn.onclick = function() {
+        welcomeModal.style.display = "none";
+        document.querySelector('.version-text').style.display = 'block';
+    }
+
     const usernameInput = document.getElementById('usernameInput');
     const ramSlider = document.getElementById('ramSlider');
     const ramAmount = document.getElementById('ramAmount');
@@ -25,10 +45,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     launchButton.addEventListener('click', function () {
         let username = usernameInput.value;
+        let authorization = token.mclc();
+
         let ramAllocation = ramSlider.value;
         let curJava = getCurrentJava();
         let curVer = getCurrentVersion()
-        ipcRenderer.send('launchMinecraft', username, ramAllocation, curJava, curVer);
+        ipcRenderer.send('launchMinecraft', authorization, username, ramAllocation, curJava, curVer);
         gameLoadProgressBar.style.display = "block";
         gameLoadDescription.style.display = "inline";
         gameLoadProgressValue.style.display = "inline";
@@ -37,6 +59,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
         launchButton.setAttribute('disabled', '');
         window.localStorage.setItem("username", username);
         gameLoadDescription.innerText = `Проверка файлов`;
+
+        gameLoadProgressBar.style.width = "100%";
+        gameLoadProgressValue.textContent = "100%";
     });
 
     ipcRenderer.on('gameLaunchFinished', () => {
