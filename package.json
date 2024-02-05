@@ -17,7 +17,7 @@
   "dependencies": {
     "jquery": "^3.7.1",
     "minecraft-launcher-core": "^3.17.1",
-    "msmc": "^5.0.4"
+    "msmc": "^4.1.0"
   },
   "devDependencies": {
     "electron": "latest",
