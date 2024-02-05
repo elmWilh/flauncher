@@ -20,7 +20,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-      devTools: false,
+      devTools: true,
     },
   });
 
@@ -69,11 +69,15 @@ function createLauncher() {
     consoleWindow.webContents.send('consoleLog', `[DATA] ${message}`);
   });
 
-  ipcMain.on('launchMinecraft', (event, username, ramAllocation, java, version) => {
+  ipcMain.on('launchMinecraft', (event, username, ramAllocation, java, version, authToken = "") => {
     launcherOptions.javaPath = java;
     launcherOptions.version.number = version;
-    launcherOptions.authorization = Authenticator.getAuth(username);
     launcherOptions.memory.max = `${ramAllocation}G`;
+    if(authToken !== ""){
+      launcherOptions.authorization = authToken.mclc()
+    } else {
+      launcherOptions.authorization = Authenticator.getAuth(username);
+    }
     console.log(`Launching Minecraft as ${username} with ${ramAllocation}GB of RAM`);
     //win.webContents.send('gameLaunched', true);
 

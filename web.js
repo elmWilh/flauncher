@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     playWithAccountBtn.onclick = async function() {
         welcomeModal.style.display = "none";
-        const { Auth } = require("msmc");
-            const authManager = new Auth("select_account");
-            authManager.launch("raw").then(async (xboxManager) => {
-                const token = await xboxManager.getMinecraft();
-            });
+        var authManager = new Auth("select_account");
+        authManager.launch("raw").then(async (xboxManager) => {
+            authToken = await xboxManager.getMinecraft();
+        });
     }
     
     playWithoutAccountBtn.onclick = function() {
@@ -50,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         let ramAllocation = ramSlider.value;
         let curJava = getCurrentJava();
         let curVer = getCurrentVersion()
-        ipcRenderer.send('launchMinecraft', authorization, username, ramAllocation, curJava, curVer);
+        ipcRenderer.send('launchMinecraft', authorization, username, ramAllocation, curJava, curVer, authToken);
         gameLoadProgressBar.style.display = "block";
         gameLoadDescription.style.display = "inline";
         gameLoadProgressValue.style.display = "inline";
