@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Minecraft Launcher</title>
+    <script src="renderer.js"></script>
+    <script src="web.js"></script>
     <style>
         /* Стили */
         @font-face {
             font-family: 'Minecrafter';
             src: url('fonts/4482-font.ttf') format('truetype');
         }
+
         @font-face {
             font-family: 'Minecrafte';
             src: url('fonts/minecraft.ttf') format('truetype');
@@ -39,11 +43,11 @@
             color: #fff;
             padding: 10px 20px;
             -webkit-app-region: drag;
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            right: 0; 
-            transition: all 0.3s ease; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            transition: all 0.3s ease;
         }
 
         .title-bar-controls {
@@ -56,16 +60,16 @@
             width: 25px;
             height: 25px;
             cursor: pointer;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
-        
+
         .close-button:hover {
             background: #424242;
             border: none;
             width: 25px;
             height: 25px;
             cursor: pointer;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
         .close-button img {
@@ -75,8 +79,8 @@
         .container {
             width: 500px;
             padding: 20px;
-            background: rgba(51, 51, 51, 0.5); 
-            backdrop-filter: blur(10px); 
+            background: rgba(51, 51, 51, 0.5);
+            backdrop-filter: blur(10px);
             border-radius: 8px;
             display: flex;
             flex-direction: column;
@@ -87,13 +91,15 @@
 
         .title {
             text-align: center;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
-        .input-field, .slider {
+        .input-field,
+        .slider,
+        select {
             width: 80%;
             margin-bottom: 10px;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
         .input-field input {
@@ -101,13 +107,13 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
             font-family: 'Minecrafte', Arial, sans-serif;
         }
 
         .slider input {
             width: 100%;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
         .button {
@@ -117,7 +123,7 @@
             color: #fff;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
             font-family: 'Minecrafte', Arial, sans-serif;
         }
 
@@ -128,7 +134,7 @@
             color: #fff;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
         .title-bar-img img {
@@ -137,22 +143,23 @@
             position: absolute;
             top: 10px;
         }
+
         .toggle-login {
             margin-top: 20px;
             text-align: center;
             cursor: pointer;
             text-decoration: underline;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
             font-family: 'Minecrafte', Arial, sans-serif;
         }
 
         .progress-bar {
             width: 100%;
-            background-color: #f3f3f3;
+            background-color: rgba(0, 0, 0, 0.6);
             border-radius: 5px;
             margin: 10px 0;
             position: relative;
-            transition: all 0.3s ease; 
+            transition: all 0.3s ease;
         }
 
         .progress-bar div {
@@ -179,15 +186,17 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/nanobar"></script>
 </head>
+
 <body>
     <div class="title-bar">
         <div class="title-bar-img"><img src="icons/Fish.png" alt="fish"></div>
-        <div class="title-bar-text" >Fugance Launcher</div>
+        <div class="title-bar-text">Fugance Launcher</div>
         <div class="title-bar-controls">
             <button class="close-button" onclick="window.close()"><img src="icons/close.png" alt="close"></button>
         </div>
     </div>
-    <div class="version-text" style="position: absolute; top: 95%; left: 2%; color: #b8ffb8;">Minecraft 1.20 Vanila</div>
+    <div class="version-text" style="position: absolute; top: 95%; left: 2%; color: #b8ffb8; display: none;">Minecraft 1.20 Vanila
+    </div>
     <div class="container">
         <h1 class="title" style="font-family: 'Minecrafter', Arial, sans-serif; font-size: 25px;">Fugance Launcher</h1>
         <div class="input-field">
@@ -196,17 +205,28 @@
         </div>
 
         <div class="slider">
-            <label for="ramSlider" style="font-family: 'Minecrafte', Arial, sans-serif;">ОЗУ: <span id="ramAmount">4 GB</span></label>
+            <label for="ramSlider" style="font-family: 'Minecrafte', Arial, sans-serif;">ОЗУ: <span id="ramAmount">4
+                    GB</span></label>
             <input id="ramSlider" type="range" min="4" max="16" value="4">
         </div>
-             
+
+        <div class="input-field">
+            <label for="usernameInput" style="font-family: 'Minecrafte', Arial, sans-serif;">Версия</label>
+            <select id="versionSelect"></select>
+        </div>
+
+        <div class="input-field">
+            <label for="usernameInput" style="font-family: 'Minecrafte', Arial, sans-serif;">Выбор Java</label>
+            <select id="javaSelect"></select>
+        </div>
+
         <button id="launchMinecraftButton" class="button">Запустить</button>
         <div class="progress-bar">
             <div id="gameLoadProgress"></div>
             <span id="gameLoadProgressValue" style="font-family: 'Minecrafte', Arial, sans-serif;">0%</span>
         </div>
+        <h5 id="gameLoadDescription" style="margin-top: 4px;"></h5>
     </div>
-    <script src="main.js"></script>
-    <script src="renderer.js"></script>
 </body>
+
 </html>
