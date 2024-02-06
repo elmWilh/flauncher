@@ -95,7 +95,7 @@
         }
 
         .input-field input {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             border: none;
             border-radius: 5px;
@@ -104,7 +104,7 @@
         }
 
         .slider input {
-            width: 100%;
+            width: 95%;
             transition: all 0.3s ease;
         }
 
@@ -147,11 +147,11 @@
 
         .progress-bar {
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: #f3f3f3;
             border-radius: 5px;
             margin: 10px 0;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease; 
         }
 
         .progress-bar div {
@@ -172,6 +172,33 @@
             font-family: 'Minecrafte', Arial, sans-serif;
         }
 
+        input:focus {
+            outline: none;
+        }
+
+        .console-button {
+            background: none;
+            border: none;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease; 
+        }
+
+        .console-button:hover {
+            background: #424242;
+            border: none;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease; 
+        }
+
+        .console-button img {
+            width: 15px;
+            margin: -4px;
+        }
+        
         input:focus {
             outline: none;
         }

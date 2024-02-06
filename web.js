@@ -44,12 +44,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     launchButton.addEventListener('click', function () {
         let username = usernameInput.value;
-        let authorization = token.mclc();
 
         let ramAllocation = ramSlider.value;
         let curJava = getCurrentJava();
         let curVer = getCurrentVersion()
-        ipcRenderer.send('launchMinecraft', authorization, username, ramAllocation, curJava, curVer, authToken);
+        ipcRenderer.send('launchMinecraft', username, ramAllocation, curJava, curVer, authToken);
         gameLoadProgressBar.style.display = "block";
         gameLoadDescription.style.display = "inline";
         gameLoadProgressValue.style.display = "inline";
