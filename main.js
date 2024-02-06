@@ -74,7 +74,7 @@ function createLauncher() {
     launcherOptions.version.number = version;
     launcherOptions.memory.max = `${ramAllocation}G`;
     if(authToken !== ""){
-      launcherOptions.authorization = authToken.mclc()
+      launcherOptions.authorization = JSON.parse(authToken);
     } else {
       launcherOptions.authorization = Authenticator.getAuth(username);
     }
