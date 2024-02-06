@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         welcomeModal.style.display = "none";
         var authManager = new Auth("select_account");
         authManager.launch("raw").then(async (xboxManager) => {
-            authToken = await xboxManager.getMinecraft();
+            authToken = await xboxManager.getMinecraft().mclc();
         });
     }
     
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         let ramAllocation = ramSlider.value;
         let curJava = getCurrentJava();
         let curVer = getCurrentVersion()
-        ipcRenderer.send('launchMinecraft', username, ramAllocation, curJava, curVer, authToken);
+        ipcRenderer.send('launchMinecraft', username, ramAllocation, curJava, curVer, JSON.stringify(authToken));
         gameLoadProgressBar.style.display = "block";
         gameLoadDescription.style.display = "inline";
         gameLoadProgressValue.style.display = "inline";
