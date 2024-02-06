@@ -2,7 +2,7 @@ window.$ = window.jQuery = require("jquery");
 const { ipcRenderer } = require('electron');
 const fs = require("fs");
 const { Auth } = require("msmc");
-let authToken = "";
+let authToken, mclcAuthToken;
 
 function getJavaList(){
   var directories = [
