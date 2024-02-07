@@ -1,6 +1,9 @@
 window.$ = window.jQuery = require("jquery");
 const { ipcRenderer } = require('electron');
 const fs = require("fs");
+const path = require("path");
+const os = require('os');
+
 const { Auth } = require("msmc");
 let authToken, mclcAuthToken;
 
@@ -36,4 +39,26 @@ function getJavaList(){
     });
   });
   return javas;
+}
+
+function getInstalledVersions(callback) {
+  const versionsDir = path.join(os.homedir(), '.minecraft', 'versions');
+  let installedVersions = [];
+
+  fs.readdir(versionsDir, (err, files) => {
+      if (err) {
+          console.error('Ошибка при чтении директории версий: ', err);
+          callback(installedVersions); // Возвращаем пустой массив, если есть ошибка
+          return;
+      }
+
+      files.forEach(file => {
+          let filePath = path.join(versionsDir, file);
+          if (fs.statSync(filePath).isDirectory()) {
+              installedVersions.push(file);
+          }
+      });
+
+      callback(installedVersions);
+  });
 }

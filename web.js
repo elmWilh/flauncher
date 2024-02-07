@@ -5,22 +5,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     var playWithAccountBtn = document.getElementById('playWithAccount');
     var playWithoutAccountBtn = document.getElementById('playWithoutAccount');
 
-    welcomeModal.style.display = "block";
-
-    playWithAccountBtn.onclick = async function() {
-        welcomeModal.style.display = "none";
-        var authManager = new Auth("select_account");
-        authManager.launch("raw").then(async (xboxManager) => {
-            authToken = await xboxManager.getMinecraft();
-            mclcAuthToken = authToken.mclc();
-        });
-    }
-    
-    playWithoutAccountBtn.onclick = function() {
-        welcomeModal.style.display = "none";
-        document.querySelector('.version-text').style.display = 'block';
-    }
-
     const usernameInput = document.getElementById('usernameInput');
     const ramSlider = document.getElementById('ramSlider');
     const ramAmount = document.getElementById('ramAmount');
@@ -29,6 +13,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const gameLoadProgressValue = document.getElementById('gameLoadProgressValue');
     const gameLoadDescription = document.getElementById('gameLoadDescription');
     const openConsoleButton = document.getElementById('openConsoleButton');
+    welcomeModal.style.display = "block";
+
+    playWithAccountBtn.onclick = async function() {
+        var authManager = new Auth("select_account");
+        authManager.launch("raw").then(async (xboxManager) => {
+            authToken = await xboxManager.getMinecraft();
+            mclcAuthToken = authToken.mclc();
+            usernameInput.value = authToken.profile.name;
+            usernameInput.setAttribute('disabled', true);
+            welcomeModal.style.display = "none";
+        }).catch(error => {
+            console.error("Ошибка аутентификации", error);
+        });
+    }
+    
+    playWithoutAccountBtn.onclick = function() {
+        welcomeModal.style.display = "none";
+        document.querySelector('.version-text').style.display = 'block';
+    }
 
     gameLoadProgressBar.style.display = "none";
     gameLoadDescription.style.display = "none";
@@ -44,7 +47,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 
     launchButton.addEventListener('click', function () {
-        let username = usernameInput.value;
+
+        if(authToken !== ""){
+            var username = ""
+          } else {
+            var username = usernameInput.value;
+          }
 
         let ramAllocation = ramSlider.value;
         let curJava = getCurrentJava();
@@ -54,8 +62,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         gameLoadDescription.style.display = "inline";
         gameLoadProgressValue.style.display = "inline";
         ramSlider.style.display = "none";
-        usernameInput.setAttribute('disabled', '');
-        launchButton.setAttribute('disabled', '');
         window.localStorage.setItem("username", username);
         gameLoadDescription.innerText = `Проверка файлов`;
 
@@ -100,6 +106,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     document.getElementById('installVersion').addEventListener('click', () => {
         ipcRenderer.send('installVersion');
     });
+
+});
+
+
+getInstalledVersions((installedVersions) => {
+    console.log('Установленные версии Minecraft:', installedVersions);
 });
 
 setTimeout(function () {
@@ -122,15 +134,12 @@ function getCurrentVersion() {
 
 function getVersionsList(cb) {
     $.get(VERSIONS_MANIFEST, (data) => {
-        var versions = [];
-        data = data.versions;
-        data.forEach((element) => {
-            if (element.type === "release") {
-                versions.push(element.id);
-            }
-        });
+        var versions = data.versions.filter(version => version.type === "release").map(version => version.id);
         cb(versions);
-    })
+    }).fail(function() {
+        console.error('Ошибка при получении списка версий с сервера Mojang');
+        cb([]);
+    });
 }
 
 function loadVersionsToSelect(cb) {

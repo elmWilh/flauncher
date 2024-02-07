@@ -303,7 +303,8 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: #141414c7;
+            backdrop-filter: blur(10px);
             margin: 15% auto; 
             padding: 20px;
             border: 1px solid #888;
@@ -314,5 +315,5 @@
         .modal .button {
             font-family: 'Minecrafter', Arial, sans-serif;
             margin-top: 10px; 
-            width: auto; 
+            width: 100%; 
         }
