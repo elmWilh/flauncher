@@ -12,10 +12,6 @@
         body {
             font-family: 'Minecrafte', Arial, sans-serif;
             background: url('icons/background.png') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
             color: #fff;
             margin: 0;
             padding: 0;
@@ -25,6 +21,8 @@
             height: 100vh;
             position: relative;
             transition: all 0.3s ease;
+            background-size: cover;
+            background-position: center;
         }
 
         .title-bar {
@@ -317,3 +315,28 @@
             margin-top: 10px; 
             width: 100%; 
         }
+
+        .microsoft-icon-container {
+            width: 50px; /* Размер квадрата */
+            height: 50px;
+            background-color: #333; /* Тёмно-серый фон */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .microsoft-icon {
+            width: 30px; /* Размер иконки */
+            height: 30px;
+        }
+        
+        .user-panel {
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: white;
+            position: absolute;
+            top: 60px; /* Настройте это значение в зависимости от местоположения */
+            left: 10px; /* Настройте это значение в зависимости от местоположения */
+        }
+        

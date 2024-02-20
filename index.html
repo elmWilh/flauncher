@@ -5,19 +5,49 @@
     <title>Minecraft Launcher</title>
     <script src="renderer.js"></script>
     <script src="web.js"></script>
+    <script src="gui.js"></script>
+    <script src="dist/sakura.js"></script>
     <link rel="stylesheet" href="styles.css">    
     <script src="nanobar.js"></script>
+
+    <link rel="stylesheet" href="sacura/dist/sakura.css" />
+
 </head>
 
-<div id="welcomeModal" class="modal">
-    <div class="modal-content">
-        <h2 style="font-size: 100%">Добро пожаловать в Fugance Launcher!</h2>
-        <button id="playWithAccount" class="button">Играть с аккаунтом Microsoft</button>
-        <button id="playWithoutAccount" class="button">Играть с обычными настройками</button>
-    </div>
-</div>
-
+<script src="sacura/dist/sakura.js" text="text/javascript"></script>
 <body>
+    <div id="sacurab" class="sacurab">
+        <script>
+            var sakura = new Sakura('body', {
+              colors: [
+                {
+                  gradientColorStart: 'rgba(255, 183, 197, 0.9)',
+                  gradientColorEnd: 'rgba(255, 197, 208, 0.9)',
+                  gradientColorDegree: 120,
+                },
+                {
+                  gradientColorStart: 'rgba(255,189,189)',
+                  gradientColorEnd: 'rgba(227,170,181)',
+                  gradientColorDegree: 120,
+                },
+                {
+                  gradientColorStart: 'rgba(212,152,163)',
+                  gradientColorEnd: 'rgba(242,185,196)',
+                  gradientColorDegree: 120,
+                },
+              ],
+              delay: 200,
+            });
+          </script>
+    </div>
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <h2 style="font-size: 100%">Добро пожаловать в Fugance Launcher!</h2>
+            <button id="playWithAccount" class="button">Играть с аккаунтом Microsoft</button>
+            <button id="playWithoutAccount" class="button">Играть с обычными настройками</button>
+        </div>
+    </div>  
+
     <div class="title-bar">
         <div class="title-bar-img"><img src="icons/Fish.png" alt="fish"></div>
         <div class="title-bar-text">Fugance Launcher</div>
@@ -25,7 +55,18 @@
             <button class="close-button" onclick="window.close()"><img src="icons/close.png" alt="close"></button>
         </div>
     </div>
+
     <div class="version-text" style="position: absolute; top: 95%; left: 2%; color: #b8ffb8; display: none;">© (2023 - 2024) Fugances.xyz.
+    </div>
+
+    <div class="microsoft-icon-container" onclick="toggleUserPanel()">
+        <img src="icons/microsoft_logo.png" alt="Microsoft" class="microsoft-icon">
+    </div>
+    
+    <div id="userPanel" class="user-panel" style="display: none;">
+        <p id="username">Имя пользователя: <span>User</span></p>
+        <button onclick="buttonAction(1)">Кнопка 1</button>
+        <button onclick="buttonAction(2)">Кнопка 2</button>
     </div>
     <div class="container">
         <h1 class="title" style="font-family: 'Minecrafter', Arial, sans-serif; font-size: 25px;">Fugance Launcher</h1>

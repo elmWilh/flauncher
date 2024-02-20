@@ -142,11 +142,52 @@ function getVersionsList(cb) {
     });
 }
 
+function getInstalledVersions() {
+    const dirPath = path.join(os.homedir(), 'AppData', 'Roaming', '.minecraft', 'versions');
+
+    try {
+        const versions = fs.readdirSync(dirPath);
+        return versions;
+    } catch (error) {
+        console.error('Ошибка при чтении установленных версий Minecraft:', error);
+        return [];
+    }
+}
+
+// Ваша функция загрузки версий в выпадающий список
+function getVersionsList(cb) {
+    $.get(VERSIONS_MANIFEST, (data) => {
+        var versions = data.versions.filter(version => version.type === "release").map(version => version.id);
+        cb(versions);
+    }).fail(function() {
+        console.error('Ошибка при получении списка версий с сервера Mojang');
+        cb([]);
+    });
+}
+
+function getInstalledVersions() {
+    const dirPath = path.join(os.homedir(), 'AppData', 'Roaming', '.minecraft', 'versions');
+
+    try {
+        const versions = fs.readdirSync(dirPath);
+        return versions;
+    } catch (error) {
+        console.error('Ошибка при чтении установленных версий Minecraft:', error);
+        return [];
+    }
+}
+
+// Ваша функция загрузки версий в выпадающий список
 function loadVersionsToSelect(cb) {
+    const installedVersions = getInstalledVersions();
+    installedVersions.forEach((version) => {
+        $("#versionSelect").append("<option>" + version + "</option>");
+    });
     getVersionsList((result) => {
-        result.forEach((version) => {
-            $("#versionSelect").append("<option>" + version + "</option>");
+        result.forEach((versions) => {
+            $("#versionSelect").append("<option>" + versions + "</option>");
         });
         cb();
     })
+    cb();
 }
