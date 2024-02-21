@@ -154,7 +154,6 @@ function getInstalledVersions() {
     }
 }
 
-// Ваша функция загрузки версий в выпадающий список
 function getVersionsList(cb) {
     $.get(VERSIONS_MANIFEST, (data) => {
         var versions = data.versions.filter(version => version.type === "release").map(version => version.id);
@@ -177,7 +176,6 @@ function getInstalledVersions() {
     }
 }
 
-// Ваша функция загрузки версий в выпадающий список
 function loadVersionsToSelect(cb) {
     const installedVersions = getInstalledVersions();
     installedVersions.forEach((version) => {

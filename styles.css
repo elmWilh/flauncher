@@ -319,9 +319,9 @@
         }
 
         .microsoft-icon-container {
-            width: 50px; /* Размер квадрата */
+            width: 50px; 
             height: 50px;
-            background-color: #333; /* Тёмно-серый фон */
+            background-color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -333,7 +333,7 @@
         }
         
         .microsoft-icon {
-            width: 30px; /* Размер иконки */
+            width: 30px; 
             height: 30px;
             z-index: 2;
         }
